@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'IngSis.snippet-manager' is invalid and this project uses 'IngSis.snippetmanager' instead.
+* The original package name 'ingsis.snippet-manager' is invalid and this project uses 'ingsis.snippetmanager' instead.
 
 # Getting Started
 
