@@ -6,6 +6,7 @@ plugins {
 	id 'org.jetbrains.kotlin.jvm' version '1.7.22'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.7.22'
 	id 'org.jetbrains.kotlin.plugin.jpa' version '1.7.22'
+	id 'java'
 }
 
 group = 'IngSis'
@@ -17,7 +18,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
