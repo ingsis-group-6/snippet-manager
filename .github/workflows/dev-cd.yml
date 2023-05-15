@@ -22,7 +22,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ingsis-group-6
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.TOKEN }}
 
       - name: Push to GitHub Packages
         id: docker_build
