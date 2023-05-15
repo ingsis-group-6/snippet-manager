@@ -17,7 +17,7 @@ class SnippetManagerApplication{
 	}
 	@GetMapping("/hello")
 	fun hello(): List<String> {
-		return listOf("Hello", " World, ", "this is Numa");
+		return listOf("Hello", " World, ", "this is Numa", "!");
 	}
 
 	@GetMapping("/snippets")
