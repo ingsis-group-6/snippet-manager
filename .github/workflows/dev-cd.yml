@@ -30,4 +30,4 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/ingsis-group-6/echo:${{ steps.short-sha.outputs.sha }}
+            ghcr.io/ingsis-group-6/snippet-manager:${{ steps.short-sha.outputs.sha }}
