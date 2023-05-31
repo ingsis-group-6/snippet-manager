@@ -82,7 +82,6 @@ class SnippetController {
     @ResponseBody
     fun getAllSnippet(@RequestHeader("Authorization") token: String): ResponseEntity<List<Snippet>> {
         val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token)
-        println(ids)
         val userId = token.split(" ")[1]
         return ResponseEntity(snippetService.getSnippetsByUserIdAndSnippetId(userId,ids), HttpStatus.OK)
     }
