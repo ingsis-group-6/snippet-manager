@@ -1,26 +1,24 @@
 version: '3'
 
 services:
-  snippet-manager-api:
-    container_name: "snippet-manager-api"
+
+  db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+
+  app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
-      DB_USER: sa
-      DB_PASSWORD: password
-      DB_NAME: compose-db
-      DB_HOST: snippet_manager_db
+      DB_HOST: db
       DB_PORT: 5432
-
-  snippet_manager_db:
-    container_name: snippet_manager_db
-    image: postgres:12
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: sa
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: compose-db
+      DB_NAME: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
