@@ -4,6 +4,7 @@ import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.repository.SnippetRepository
 import ingsis.snippetmanager.error.HTTPError
+import ingsis.snippetmanager.service.ShareSnippetService
 import ingsis.snippetmanager.util.Util
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -38,7 +39,7 @@ class SnippetServiceImpl: SnippetService {
         return this.snippetRepository.save(snippet)
     }
 
-    override fun deleteSnippet(id: UUID) {
+    override fun deleteSnippet(id: UUID, token: String) {
         this.snippetRepository.deleteById(id)
     }
 
@@ -61,5 +62,16 @@ class SnippetServiceImpl: SnippetService {
 
     override fun getSnippetsByUserIdAndSnippetId(userId: String, snippetId: List<UUID>): List<Snippet> {
         return this.snippetRepository.findAllByUserIdAndSnippetId(userId, snippetId)
+    }
+
+    override fun validateOwnership(userId: String, snippetId: UUID) {
+        val snippet = this.snippetRepository.findById(snippetId)
+        if (snippet.isPresent) {
+            if (snippet.get().ownerId != userId) {
+                throw HTTPError("You don't have permission to access this snippet", HttpStatus.UNAUTHORIZED)
+            }
+        } else {
+            throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
+        }
     }
 }

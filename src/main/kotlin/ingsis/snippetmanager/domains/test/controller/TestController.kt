@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
+import java.security.Principal
 import java.util.*
 
 @RestController
@@ -33,8 +34,8 @@ class TestController {
 
     @PostMapping("/test")
     @ResponseBody
-    fun createTest(@RequestHeader("Authorization") token: String, @RequestBody testDto: TestDTO): ResponseEntity<Test> {
-        return ResponseEntity(testService.createTest(testDto, token.split(" ")[1]), HttpStatus.CREATED)
+    fun createTest(principal: Principal, @RequestBody testDto: TestDTO): ResponseEntity<Test> {
+        return ResponseEntity(testService.createTest(testDto, principal.name), HttpStatus.CREATED)
     }
 
     @PutMapping("/test")

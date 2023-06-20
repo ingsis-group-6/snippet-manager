@@ -5,9 +5,9 @@ import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.service.SnippetService
 import ingsis.snippetmanager.error.HTTPError
 import ingsis.snippetmanager.service.ShareSnippetService
+import io.github.cdimascio.dotenv.Dotenv
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.client.RestTemplate
+import java.security.Principal
 import java.util.*
 
 @RestController
@@ -33,36 +35,31 @@ class SnippetController {
     }
     @PostMapping("/snippet")
     @ResponseBody
-    fun getSnippet(@RequestHeader("Authorization") token: String, @RequestBody snippetDto: SnippetDTO): ResponseEntity<Any> {
+    fun createSnippet(principal: Principal, @RequestBody snippetDto: SnippetDTO): ResponseEntity<Any> {
 
-        try {
-            return ResponseEntity(snippetService.createSnippet(snippetDto, token.split(" ")[1]), HttpStatus.CREATED)
-        }catch (e: HTTPError){
-            return ResponseEntity(e.message, e.status!!)
-        }
+        return ResponseEntity(snippetService.createSnippet(snippetDto,principal.name), HttpStatus.CREATED)
     }
 
     @PutMapping("/snippet")
     @ResponseBody
-    fun updateSnippet(@RequestHeader("Authorization") token: String, @RequestBody snippet: Snippet): ResponseEntity<Snippet> {
+    fun updateSnippet(principal: Principal, @RequestBody snippet: Snippet): ResponseEntity<Snippet> {
         return ResponseEntity(snippetService.updateSnippet(snippet), HttpStatus.OK)
     }
 
     @DeleteMapping("/snippet/{id}")
     @ResponseBody
-    fun deleteSnippet(@RequestHeader("Authorization") token: String, @PathVariable id: UUID): ResponseEntity<String> {
-        snippetService.deleteSnippet(id)
+    fun deleteSnippet(@RequestHeader("Authorization") token: String, principal: Principal, @PathVariable id: UUID): ResponseEntity<String> {
+        val userId = principal.name
+        snippetService.deleteSnippet(id, userId)
+        ShareSnippetService.deleteSharesFromSnippet(token, id)
         return ResponseEntity("Snippet deleted", HttpStatus.OK)
     }
 
     @GetMapping("/snippet/{id}")
     @ResponseBody
     fun getSnippetById(@RequestHeader("Authorization") token: String, @PathVariable id: UUID): ResponseEntity<Any> {
-        try {
-            return ResponseEntity(snippetService.getSnippetById(id), HttpStatus.OK)
-        }catch (e: HTTPError){
-            return ResponseEntity(e.message, e.status!!)
-        }
+        val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token)
+        return ResponseEntity(snippetService.getSnippetById(id), HttpStatus.OK)
     }
 
     @GetMapping("/snippet/by_user/{userId}")
@@ -80,11 +77,16 @@ class SnippetController {
 
     @GetMapping("/snippet/all")
     @ResponseBody
-    fun getAllSnippet(@RequestHeader("Authorization") token: String): ResponseEntity<List<Snippet>> {
+    fun getAllSnippet(@RequestHeader("Authorization") token: String, principal: Principal): ResponseEntity<List<Snippet>> {
         val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token)
-        val userId = token.split(" ")[1]
+        val userId = principal.name
         return ResponseEntity(snippetService.getSnippetsByUserIdAndSnippetId(userId,ids), HttpStatus.OK)
     }
 
+    @GetMapping("/snippet/validateOwnership/{snippetId}")
+    fun validateOwnership(principal: Principal, @PathVariable snippetId: UUID): ResponseEntity<Any> {
+        snippetService.validateOwnership(principal.name, snippetId)
+        return ResponseEntity(HttpStatus.OK)
+    }
 
 }

@@ -1,0 +1,14 @@
+auth0:
+  audience: https://ingsis-group-6-snippets.com
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-rjrd5i1gdszeds2w.us.auth0.com/
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
