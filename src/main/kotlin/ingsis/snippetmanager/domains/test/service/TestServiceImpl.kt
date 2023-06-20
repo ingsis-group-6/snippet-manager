@@ -4,7 +4,9 @@ import ingsis.snippetmanager.domains.snippet.repository.SnippetRepository
 import ingsis.snippetmanager.domains.test.dto.TestDTO
 import ingsis.snippetmanager.domains.test.model.Test
 import ingsis.snippetmanager.domains.test.repository.TestRepository
+import ingsis.snippetmanager.error.HTTPError
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -24,6 +26,10 @@ class TestServiceImpl : TestService{
 
     override fun createTest(testDTO: TestDTO, userId: String): Test {
 
+        val snippet = this.snippetRepository.findById(testDTO.snippetId!!)
+
+        if (snippet.get().ownerId != userId) throw HTTPError("User must own snippet to create a test", HttpStatus.FORBIDDEN)
+
         val test = Test(
             description = testDTO.description,
             ownerId = userId,
@@ -35,12 +41,15 @@ class TestServiceImpl : TestService{
         return testRepository.save(test)
     }
 
-    override fun updateTest(test: Test): Test {
-        return testRepository.save(test)
+    override fun updateTest(test: Test, userId: String): Test {
+        if (test.ownerId == userId) return testRepository.save(test)
+        throw HTTPError("User must own test to edit it", HttpStatus.FORBIDDEN)
     }
 
-    override fun deleteTest(id: UUID) {
-        testRepository.deleteById(id)
+    override fun deleteTest(id: UUID,userId: String) {
+        val test = this.testRepository.findById(id)
+        if (test.get().ownerId == userId) return testRepository.deleteById(id)
+        throw HTTPError("User must own test to edit it", HttpStatus.FORBIDDEN)
     }
 
     override fun getTestsByUser(id: String): List<Test> {

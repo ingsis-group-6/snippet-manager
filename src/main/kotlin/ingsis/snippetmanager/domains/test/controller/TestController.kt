@@ -40,19 +40,19 @@ class TestController {
 
     @PutMapping("/test")
     @ResponseBody
-    fun updateTest(@RequestHeader("Authorization") token: String, @RequestBody test: Test): ResponseEntity<Test> {
-        return ResponseEntity(testService.updateTest(test), HttpStatus.OK)
+    fun updateTest(principal: Principal, @RequestBody test: Test): ResponseEntity<Test> {
+        return ResponseEntity(testService.updateTest(test, principal.name), HttpStatus.OK)
     }
 
     @DeleteMapping("/test/{id}")
-    fun deleteTest(@RequestHeader("Authorization") token: String, @PathVariable id: UUID): ResponseEntity<String> {
-        testService.deleteTest(id)
+    fun deleteTest(principal: Principal, @PathVariable id: UUID): ResponseEntity<String> {
+        testService.deleteTest(id, principal.name)
         return ResponseEntity("Test deleted", HttpStatus.OK)
     }
 
     @GetMapping("/test/by_user/{id}")
     @ResponseBody
-    fun getTestsByUser(@RequestHeader("Authorization") token: String, @PathVariable id: String): ResponseEntity<List<Test>> {
+    fun getTestsByUser(principal: Principal, @PathVariable id: String): ResponseEntity<List<Test>> {
         return ResponseEntity(testService.getTestsByUser(id), HttpStatus.OK)
     }
 
