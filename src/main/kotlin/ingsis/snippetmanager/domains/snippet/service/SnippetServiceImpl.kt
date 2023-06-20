@@ -43,10 +43,16 @@ class SnippetServiceImpl: SnippetService {
         this.snippetRepository.deleteById(id)
     }
 
-    override fun getSnippetById(id: UUID): Snippet {
+    override fun getSnippetById(id: UUID, token: String, userId: String): Snippet {
         val snippet = this.snippetRepository.findById(id)
         if (snippet.isPresent) {
-            return snippet.get()
+            val snippet =  snippet.get()
+            if (snippet.ownerId == userId) return snippet
+            else{
+                val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token);
+                if (ids.contains(snippet.id)) return snippet
+                else throw HTTPError("User doesn't have access to snippet", HttpStatus.FORBIDDEN)
+            }
         } else {
             throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
         }

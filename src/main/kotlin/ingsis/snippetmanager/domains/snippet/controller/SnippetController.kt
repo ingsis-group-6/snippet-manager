@@ -57,9 +57,8 @@ class SnippetController {
 
     @GetMapping("/snippet/{id}")
     @ResponseBody
-    fun getSnippetById(@RequestHeader("Authorization") token: String, @PathVariable id: UUID): ResponseEntity<Any> {
-        val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token)
-        return ResponseEntity(snippetService.getSnippetById(id), HttpStatus.OK)
+    fun getSnippetById(@RequestHeader("Authorization") token: String, principal: Principal, @PathVariable id: UUID): ResponseEntity<Any> {
+        return ResponseEntity(snippetService.getSnippetById(id,token,principal.name), HttpStatus.OK)
     }
 
     @GetMapping("/snippet/by_user/{userId}")

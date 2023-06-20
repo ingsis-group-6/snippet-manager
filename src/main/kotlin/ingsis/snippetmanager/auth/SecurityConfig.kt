@@ -1,4 +1,4 @@
-package ingsis.snippetshare.auth
+package ingsis.snippetmanager.auth
 
 import ingsis.snippetmanager.auth.AudienceValidator
 import org.springframework.beans.factory.annotation.Value;
