@@ -7,7 +7,7 @@ import java.util.*
 interface SnippetService {
 
     fun createSnippet(snippet: SnippetDTO, userId: String): Snippet
-    fun updateSnippet(snippet:Snippet): Snippet
+    fun updateSnippet(snippet:Snippet, userId: String): Snippet
     fun deleteSnippet(id: UUID, userId: String)
     fun getSnippetById(id: UUID, token: String, userId: String): Snippet
     fun getSnippetsByUserId(userId: String): List<Snippet>

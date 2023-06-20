@@ -34,13 +34,16 @@ class SnippetServiceImpl: SnippetService {
         return this.snippetRepository.save(s)
     }
 
-    override fun updateSnippet(snippet: Snippet): Snippet {
+    override fun updateSnippet(snippet: Snippet, userId: String): Snippet {
         snippet.updatedAt = Date()
-        return this.snippetRepository.save(snippet)
+        if (snippet.ownerId == userId) return this.snippetRepository.save(snippet)
+        throw HTTPError("User must own the snippet to edit it", HttpStatus.FORBIDDEN)
     }
 
-    override fun deleteSnippet(id: UUID, token: String) {
-        this.snippetRepository.deleteById(id)
+    override fun deleteSnippet(id: UUID, userId: String) {
+        val snippet = this.snippetRepository.findById(id)
+        if (snippet.get().ownerId == userId) this.snippetRepository.deleteById(id)
+        throw HTTPError("User must own the snippet to delete it", HttpStatus.FORBIDDEN)
     }
 
     override fun getSnippetById(id: UUID, token: String, userId: String): Snippet {

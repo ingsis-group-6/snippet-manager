@@ -36,14 +36,14 @@ class SnippetController {
     @PostMapping("/snippet")
     @ResponseBody
     fun createSnippet(principal: Principal, @RequestBody snippetDto: SnippetDTO): ResponseEntity<Any> {
-
         return ResponseEntity(snippetService.createSnippet(snippetDto,principal.name), HttpStatus.CREATED)
     }
 
     @PutMapping("/snippet")
     @ResponseBody
     fun updateSnippet(principal: Principal, @RequestBody snippet: Snippet): ResponseEntity<Snippet> {
-        return ResponseEntity(snippetService.updateSnippet(snippet), HttpStatus.OK)
+        val userId = principal.name
+        return ResponseEntity(snippetService.updateSnippet(snippet, userId), HttpStatus.OK)
     }
 
     @DeleteMapping("/snippet/{id}")
