@@ -1,5 +1,6 @@
 package ingsis.snippetmanager.domains.snippet.service
 
+import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.repository.SnippetRepository
@@ -21,7 +22,7 @@ class SnippetServiceImpl: SnippetService {
         this.snippetRepository = snippetRepository
     }
 
-    override fun createSnippet(snippet: SnippetDTO, userId: String): Snippet {
+    override fun createSnippet(snippet: CreateSnippetDTO, userId: String): SnippetDTO {
 
         if (!Util.validateField(snippet.name)) throw HTTPError("Invalid snippet name", HttpStatus.BAD_REQUEST)
         if (!Util.validateField(snippet.type)) throw HTTPError("Invalid snippet type", HttpStatus.BAD_REQUEST)
@@ -31,12 +32,12 @@ class SnippetServiceImpl: SnippetService {
             snippet.type,
             userId,
             snippet.content,)
-        return this.snippetRepository.save(s)
+        return SnippetDTO(this.snippetRepository.save(s))
     }
 
-    override fun updateSnippet(snippet: Snippet, userId: String): Snippet {
+    override fun updateSnippet(snippet: Snippet, userId: String): SnippetDTO {
         snippet.updatedAt = Date()
-        if (snippet.ownerId == userId) return this.snippetRepository.save(snippet)
+        if (snippet.ownerId == userId) return SnippetDTO(this.snippetRepository.save(snippet))
         throw HTTPError("User must own the snippet to edit it", HttpStatus.FORBIDDEN)
     }
 
@@ -46,14 +47,14 @@ class SnippetServiceImpl: SnippetService {
         throw HTTPError("User must own the snippet to delete it", HttpStatus.FORBIDDEN)
     }
 
-    override fun getSnippetById(id: UUID, token: String, userId: String): Snippet {
+    override fun getSnippetById(id: UUID, token: String, userId: String): SnippetDTO {
         val snippet = this.snippetRepository.findById(id)
         if (snippet.isPresent) {
             val snippet =  snippet.get()
-            if (snippet.ownerId == userId) return snippet
+            if (snippet.ownerId == userId) return SnippetDTO(snippet)
             else{
                 val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token);
-                if (ids.contains(snippet.id)) return snippet
+                if (ids.contains(snippet.id)) return SnippetDTO(snippet)
                 else throw HTTPError("User doesn't have access to snippet", HttpStatus.FORBIDDEN)
             }
         } else {
@@ -61,16 +62,16 @@ class SnippetServiceImpl: SnippetService {
         }
     }
 
-    override fun getSnippetsByUserId(userId: String): List<Snippet> {
-        return this.snippetRepository.findByUserId(userId)
+    override fun getSnippetsByUserId(userId: String): List<SnippetDTO> {
+        return this.snippetRepository.findByUserId(userId).map { SnippetDTO(it) }
     }
 
-    override fun getAllSnippetsByUserId(userId: String): List<Snippet> {
-        return this.snippetRepository.findAllByUserId(userId)
+    override fun getAllSnippetsByUserId(userId: String): List<SnippetDTO> {
+        return this.snippetRepository.findAllByUserId(userId).map { SnippetDTO(it) }
     }
 
-    override fun getSnippetsByUserIdAndSnippetId(userId: String, snippetId: List<UUID>): List<Snippet> {
-        return this.snippetRepository.findAllByUserIdAndSnippetId(userId, snippetId)
+    override fun getSnippetsByUserIdAndSnippetId(userId: String, snippetId: List<UUID>): List<SnippetDTO> {
+        return this.snippetRepository.findAllByUserIdAndSnippetId(userId, snippetId).map { SnippetDTO(it) }
     }
 
     override fun validateOwnership(userId: String, snippetId: UUID) {

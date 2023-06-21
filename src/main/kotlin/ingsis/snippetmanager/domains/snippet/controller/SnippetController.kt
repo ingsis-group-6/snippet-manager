@@ -1,11 +1,10 @@
 package ingsis.snippetmanager.domains.snippet.controller
 
+import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.service.SnippetService
-import ingsis.snippetmanager.error.HTTPError
 import ingsis.snippetmanager.service.ShareSnippetService
-import io.github.cdimascio.dotenv.Dotenv
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.client.RestTemplate
 import java.security.Principal
 import java.util.*
 
@@ -35,13 +33,13 @@ class SnippetController {
     }
     @PostMapping("/snippet")
     @ResponseBody
-    fun createSnippet(principal: Principal, @RequestBody snippetDto: SnippetDTO): ResponseEntity<Any> {
-        return ResponseEntity(snippetService.createSnippet(snippetDto,principal.name), HttpStatus.CREATED)
+    fun createSnippet(principal: Principal, @RequestBody createSnippetDto: CreateSnippetDTO): ResponseEntity<Any> {
+        return ResponseEntity(snippetService.createSnippet(createSnippetDto,principal.name), HttpStatus.CREATED)
     }
 
     @PutMapping("/snippet")
     @ResponseBody
-    fun updateSnippet(principal: Principal, @RequestBody snippet: Snippet): ResponseEntity<Snippet> {
+    fun updateSnippet(principal: Principal, @RequestBody snippet: Snippet): ResponseEntity<SnippetDTO> {
         val userId = principal.name
         return ResponseEntity(snippetService.updateSnippet(snippet, userId), HttpStatus.OK)
     }
@@ -63,20 +61,20 @@ class SnippetController {
 
     @GetMapping("/snippet/by_user/{userId}")
     @ResponseBody
-    fun getSnippetByUserId(@RequestHeader("Authorization") token: String, @PathVariable userId: String): ResponseEntity<List<Snippet>> {
+    fun getSnippetByUserId(@RequestHeader("Authorization") token: String, @PathVariable userId: String): ResponseEntity<List<SnippetDTO>> {
         return ResponseEntity(snippetService.getSnippetsByUserId(userId), HttpStatus.OK)
     }
 
     @GetMapping("/snippet/all/{userId}")
     @ResponseBody
-    fun getAllSnippetByUserId(@RequestHeader("Authorization") token: String, @PathVariable userId: String): ResponseEntity<List<Snippet>> {
+    fun getAllSnippetByUserId(@RequestHeader("Authorization") token: String, @PathVariable userId: String): ResponseEntity<List<SnippetDTO>> {
         val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token)
         return ResponseEntity(snippetService.getSnippetsByUserIdAndSnippetId(userId, ids), HttpStatus.OK)
     }
 
     @GetMapping("/snippet/all")
     @ResponseBody
-    fun getAllSnippet(@RequestHeader("Authorization") token: String, principal: Principal): ResponseEntity<List<Snippet>> {
+    fun getAllSnippet(@RequestHeader("Authorization") token: String, principal: Principal): ResponseEntity<List<SnippetDTO>> {
         val ids = ShareSnippetService.getSharedWithMeSnippetsIds(token)
         val userId = principal.name
         return ResponseEntity(snippetService.getSnippetsByUserIdAndSnippetId(userId,ids), HttpStatus.OK)

@@ -34,13 +34,13 @@ class TestController {
 
     @PostMapping("/test")
     @ResponseBody
-    fun createTest(principal: Principal, @RequestBody testDto: TestDTO): ResponseEntity<Test> {
+    fun createTest(principal: Principal, @RequestBody testDto: TestDTO): ResponseEntity<TestDTO> {
         return ResponseEntity(testService.createTest(testDto, principal.name), HttpStatus.CREATED)
     }
 
     @PutMapping("/test")
     @ResponseBody
-    fun updateTest(principal: Principal, @RequestBody test: Test): ResponseEntity<Test> {
+    fun updateTest(principal: Principal, @RequestBody test: Test): ResponseEntity<TestDTO> {
         return ResponseEntity(testService.updateTest(test, principal.name), HttpStatus.OK)
     }
 
@@ -50,9 +50,15 @@ class TestController {
         return ResponseEntity("Test deleted", HttpStatus.OK)
     }
 
+    @GetMapping("/test")
+    @ResponseBody
+    fun getMyTests(principal: Principal): ResponseEntity<List<TestDTO>> {
+        return ResponseEntity(testService.getTestsByUser(principal.name), HttpStatus.OK)
+    }
+
     @GetMapping("/test/by_user/{id}")
     @ResponseBody
-    fun getTestsByUser(principal: Principal, @PathVariable id: String): ResponseEntity<List<Test>> {
+    fun getTestsByUser(principal: Principal, @PathVariable id: String): ResponseEntity<List<TestDTO>> {
         return ResponseEntity(testService.getTestsByUser(id), HttpStatus.OK)
     }
 
