@@ -24,3 +24,5 @@ services:
       DB_USER: postgres
       DB_PASSWORD: postgres
       SHARE_URI: "http://localhost:8080/share"
+
+    
