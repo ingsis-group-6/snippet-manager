@@ -1,6 +1,7 @@
 package ingsis.snippetmanager.domains.test.model
 
 import ingsis.snippetmanager.domains.snippet.model.Snippet
+import ingsis.snippetmanager.domains.test.dto.TestDTO
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -71,5 +72,14 @@ class Test {
         this.input = input
         this.output = output
         this.snippet = snippet
+    }
+
+    constructor(test: TestDTO) {
+        this.description = test.description
+        this.createdAt = Date()
+        this.ownerId = test.ownerId
+        this.input = test.input.toString()
+        this.output = test.output.toString()
+        this.snippet = Snippet().apply { id = test.snippetId }
     }
 }

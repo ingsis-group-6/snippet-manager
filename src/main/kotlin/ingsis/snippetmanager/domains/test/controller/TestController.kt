@@ -1,6 +1,7 @@
 package ingsis.snippetmanager.domains.test.controller
 
 
+import ingsis.snippetmanager.domains.test.dto.CreateTestDTO
 import ingsis.snippetmanager.domains.test.dto.TestDTO
 import ingsis.snippetmanager.domains.test.model.Test
 import ingsis.snippetmanager.domains.test.service.TestService
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
@@ -34,13 +34,13 @@ class TestController {
 
     @PostMapping("/test")
     @ResponseBody
-    fun createTest(principal: Principal, @RequestBody testDto: TestDTO): ResponseEntity<TestDTO> {
+    fun createTest(principal: Principal, @RequestBody testDto: CreateTestDTO): ResponseEntity<TestDTO> {
         return ResponseEntity(testService.createTest(testDto, principal.name), HttpStatus.CREATED)
     }
 
     @PutMapping("/test")
     @ResponseBody
-    fun updateTest(principal: Principal, @RequestBody test: Test): ResponseEntity<TestDTO> {
+    fun updateTest(principal: Principal, @RequestBody test: TestDTO): ResponseEntity<TestDTO> {
         return ResponseEntity(testService.updateTest(test, principal.name), HttpStatus.OK)
     }
 
@@ -59,7 +59,7 @@ class TestController {
     @GetMapping("/test/by_user/{id}")
     @ResponseBody
     fun getTestsByUser(principal: Principal, @PathVariable id: String): ResponseEntity<List<TestDTO>> {
-        return ResponseEntity(testService.getTestsByUser(id), HttpStatus.OK)
+        return ResponseEntity(testService.getTestsByUser("auth0|"+id), HttpStatus.OK)
     }
 
 }

@@ -2,6 +2,7 @@ package ingsis.snippetmanager.domains.snippet.service
 
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
+import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.repository.SnippetRepository
 import ingsis.snippetmanager.error.HTTPError
@@ -35,15 +36,19 @@ class SnippetServiceImpl: SnippetService {
         return SnippetDTO(this.snippetRepository.save(s))
     }
 
-    override fun updateSnippet(snippet: Snippet, userId: String): SnippetDTO {
-        snippet.updatedAt = Date()
-        if (snippet.ownerId == userId) return SnippetDTO(this.snippetRepository.save(snippet))
+    override fun updateSnippet(snippet: UpdateSnippetDTO, userId: String): SnippetDTO {
+        val snippetToSave = this.snippetRepository.findById(snippet.id!!).get()
+        snippetToSave.name = snippet.name
+        snippetToSave.type = snippet.type
+        snippetToSave.content = snippet.content
+        snippetToSave.updatedAt = Date()
+        if (snippet.ownerId == userId) return SnippetDTO(this.snippetRepository.save(snippetToSave))
         throw HTTPError("User must own the snippet to edit it", HttpStatus.FORBIDDEN)
     }
 
     override fun deleteSnippet(id: UUID, userId: String) {
         val snippet = this.snippetRepository.findById(id)
-        if (snippet.get().ownerId == userId) this.snippetRepository.deleteById(id)
+        if (snippet.get().ownerId == userId) return this.snippetRepository.deleteById(id)
         throw HTTPError("User must own the snippet to delete it", HttpStatus.FORBIDDEN)
     }
 
