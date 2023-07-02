@@ -31,6 +31,8 @@ class SecurityConfig {
             it.requestMatchers("/test/**").authenticated()
             it.requestMatchers("/rule").authenticated()
             it.requestMatchers("/rule/**").authenticated()
+            it.requestMatchers("/error").permitAll()
+            it.requestMatchers("/error/**").permitAll()
         }
             .cors().and()
             .csrf().disable()
