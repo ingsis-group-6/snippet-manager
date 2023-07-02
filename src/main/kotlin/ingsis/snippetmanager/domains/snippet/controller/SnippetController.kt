@@ -2,6 +2,7 @@ package ingsis.snippetmanager.domains.snippet.controller
 
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
+import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.service.SnippetService
 import ingsis.snippetmanager.service.ShareSnippetService
@@ -39,7 +40,7 @@ class SnippetController {
 
     @PutMapping("/snippet")
     @ResponseBody
-    fun updateSnippet(principal: Principal, @RequestBody snippet: Snippet): ResponseEntity<SnippetDTO> {
+    fun updateSnippet(principal: Principal, @RequestBody snippet: UpdateSnippetDTO): ResponseEntity<SnippetDTO> {
         val userId = principal.name
         return ResponseEntity(snippetService.updateSnippet(snippet, userId), HttpStatus.OK)
     }

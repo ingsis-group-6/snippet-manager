@@ -1,6 +1,7 @@
 package ingsis.snippetmanager.domains.test.service
 
 import ingsis.snippetmanager.domains.snippet.repository.SnippetRepository
+import ingsis.snippetmanager.domains.test.dto.CreateTestDTO
 import ingsis.snippetmanager.domains.test.dto.TestDTO
 import ingsis.snippetmanager.domains.test.model.Test
 import ingsis.snippetmanager.domains.test.repository.TestRepository
@@ -24,7 +25,7 @@ class TestServiceImpl : TestService{
         this.snippetRepository = snippetRepository
     }
 
-    override fun createTest(testDTO: TestDTO, userId: String): TestDTO {
+    override fun createTest(testDTO: CreateTestDTO, userId: String): TestDTO {
 
         val snippet = this.snippetRepository.findById(testDTO.snippetId!!)
 
@@ -33,16 +34,16 @@ class TestServiceImpl : TestService{
         val test = Test(
             description = testDTO.description,
             ownerId = userId,
-            input = testDTO.input,
-            output = testDTO.output,
+            input = testDTO.input.toString(),
+            output = testDTO.output.toString(),
             snippetId = testDTO.snippetId
         )
 
         return TestDTO(testRepository.save(test))
     }
 
-    override fun updateTest(test: Test, userId: String): TestDTO {
-        if (test.ownerId == userId) return TestDTO(testRepository.save(test))
+    override fun updateTest(test: TestDTO, userId: String): TestDTO {
+        if (test.ownerId == userId) return TestDTO(testRepository.save(Test(test)))
         throw HTTPError("User must own test to edit it", HttpStatus.FORBIDDEN)
     }
 
