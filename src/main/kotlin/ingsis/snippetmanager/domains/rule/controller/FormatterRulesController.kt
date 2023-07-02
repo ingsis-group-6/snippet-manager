@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
 
@@ -27,7 +28,7 @@ class FormatterRulesController{
     }
 
     @PutMapping("/rule/formatter")
-    fun updateFormatterRules(formatterRules: FormatterRulesDTO, principal: Principal): ResponseEntity<FormatterRulesDTO>{
+    fun updateFormatterRules(@RequestBody formatterRules: FormatterRulesDTO, principal: Principal): ResponseEntity<FormatterRulesDTO>{
         return ResponseEntity.ok(ruleService.updateFormatterRules(formatterRules, principal.name))
     }
 }

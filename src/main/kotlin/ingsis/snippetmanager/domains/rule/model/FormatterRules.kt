@@ -1,5 +1,6 @@
 package ingsis.snippetmanager.domains.rule.model
 
+import ingsis.snippetmanager.domains.rule.dto.FormatterRulesDTO
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
@@ -58,6 +59,14 @@ class FormatterRules {
         this.spaceBeforeAndAfterAssignationOperator = spaceBeforeAndAfterAssignationOperator
         this.newLinesBeforePrintLn = newLinesBeforePrintLn
         this.userId = userId
+    }
+
+    constructor(formatterRules: FormatterRulesDTO){
+        this.spaceBeforeColon = formatterRules.spaceBeforeColon
+        this.spaceAfterColon = formatterRules.spaceAfterColon
+        this.spaceBeforeAndAfterAssignationOperator = formatterRules.spaceBeforeAndAfterAssignationOperator
+        this.newLinesBeforePrintLn = formatterRules.newLinesBeforePrintLn
+        this.userId = formatterRules.userId
     }
 
 }

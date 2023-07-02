@@ -31,4 +31,12 @@ class FormatterRulesDTO {
         this.newLinesBeforePrintLn = rule.newLinesBeforePrintLn
         this.userId = rule.userId
     }
+
+    constructor(userId: String?){
+        this.userId = userId
+        this.spaceBeforeColon = 0
+        this.spaceAfterColon = 1
+        this.spaceBeforeAndAfterAssignationOperator = 1
+        this.newLinesBeforePrintLn = 1
+    }
 }

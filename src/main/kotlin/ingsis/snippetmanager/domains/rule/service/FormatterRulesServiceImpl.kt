@@ -34,8 +34,9 @@ class FormatterRulesServiceImpl: FormatterRulesService{
             rules.spaceBeforeAndAfterAssignationOperator = formatterRules.spaceBeforeAndAfterAssignationOperator
             rules.newLinesBeforePrintLn = formatterRules.newLinesBeforePrintLn
             return FormatterRulesDTO(formatterRulesRepository.save(rules))
-        }catch (e: Exception){
-            return FormatterRulesDTO(formatterRulesRepository.save(FormatterRules(formatterRules.spaceBeforeColon,formatterRules.spaceAfterColon,formatterRules.spaceBeforeAndAfterAssignationOperator,formatterRules.newLinesBeforePrintLn,userId)))
+        }
+        catch (e: Exception){
+            return FormatterRulesDTO(formatterRulesRepository.save(FormatterRules(formatterRules)))
         }
 
     }
