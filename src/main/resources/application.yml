@@ -15,8 +15,8 @@ logging:
 
 redis:
   stream:
-    key: ingsis-group-6
-  host: localhost
-  port: 6379
+    key: ${REDIS_STREAM_KEY}
+  host: ${REDIS_HOST}
+  port: ${REDIS_PORT}
   groups:
-    lint: lint2
+    lint: ${REDIS_STREAM_GROUP_LINT}
