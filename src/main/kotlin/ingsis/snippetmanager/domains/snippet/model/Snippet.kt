@@ -34,6 +34,9 @@ class Snippet {
     @OneToMany(mappedBy = "snippet", cascade = [CascadeType.ALL], orphanRemoval = true)
     var tests: MutableList<Test> = mutableListOf()
 
+    @Column(name = "status", nullable = false)
+    var status: LintingStatus? = LintingStatus.PENDING
+
     constructor(
         id: UUID?,
         name: String?,
@@ -41,7 +44,8 @@ class Snippet {
         ownerId: String?,
         content: String?,
         createdAt: Date?,
-        updatedAt: Date?
+        updatedAt: Date?,
+        status: LintingStatus?
     ) {
         this.id = id
         this.name = name
@@ -50,15 +54,17 @@ class Snippet {
         this.content = content
         this.createdAt = createdAt
         this.updatedAt = updatedAt
+        this.status = status
     }
 
-    constructor(name: String?, type: String?, ownerId: String?, content: String?) {
+    constructor(name: String?, type: String?, ownerId: String?, content: String?, status: LintingStatus?) {
         this.name = name
         this.type = type
         this.ownerId = ownerId
         this.content = content
         this.createdAt = Date()
         this.tests = mutableListOf()
+        this.status = status
     }
 
     constructor(name: String?, type: String?, ownerId: String?, content: String?, tests: MutableList<Test>) {
@@ -68,6 +74,16 @@ class Snippet {
         this.content = content
         this.createdAt = Date()
         this.tests = tests
+    }
+
+    constructor(name: String?, type: String?, ownerId: String?, content: String?) {
+        this.name = name
+        this.type = type
+        this.ownerId = ownerId
+        this.content = content
+        this.createdAt = Date()
+        this.tests = mutableListOf()
+        this.status = LintingStatus.PENDING
     }
 
     constructor() {
@@ -80,4 +96,8 @@ class Snippet {
         if (this.id == null) return false
         return this.id == other.id
     }
+}
+
+enum class LintingStatus {
+    PENDING, COMPLIANT, NON_COMPLIANT
 }

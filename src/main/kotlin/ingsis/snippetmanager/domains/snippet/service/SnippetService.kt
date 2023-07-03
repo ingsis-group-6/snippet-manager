@@ -3,6 +3,7 @@ package ingsis.snippetmanager.domains.snippet.service
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
+import ingsis.snippetmanager.domains.snippet.model.LintingStatus
 import java.util.*
 
 interface SnippetService {
@@ -15,4 +16,5 @@ interface SnippetService {
     fun getAllSnippetsByUserId(userId: String): List<SnippetDTO>
     fun getSnippetsByUserIdAndSnippetId(userId: String, snippets: List<UUID>): List<SnippetDTO>
     fun validateOwnership(userId: String, snippetId: UUID)
+    fun updateStatus(id: UUID, status: LintingStatus, userId: String)
 }

@@ -3,6 +3,7 @@ package ingsis.snippetmanager.domains.snippet.service
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
+import ingsis.snippetmanager.domains.snippet.model.LintingStatus
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.repository.SnippetRepository
 import ingsis.snippetmanager.error.HTTPError
@@ -32,7 +33,7 @@ class SnippetServiceImpl: SnippetService {
             snippet.name,
             snippet.type,
             userId,
-            snippet.content,)
+            snippet.content)
         return SnippetDTO(this.snippetRepository.save(s))
     }
 
@@ -85,6 +86,20 @@ class SnippetServiceImpl: SnippetService {
             if (snippet.get().ownerId != userId) {
                 throw HTTPError("You don't have permission to access this snippet", HttpStatus.UNAUTHORIZED)
             }
+        } else {
+            throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
+        }
+    }
+
+    override fun updateStatus(id: UUID, status: LintingStatus, userId: String) {
+        val snippet = this.snippetRepository.findById(id)
+        if (snippet.isPresent) {
+            if (snippet.get().ownerId != userId) {
+                throw HTTPError("You don't have permission to access this snippet", HttpStatus.UNAUTHORIZED)
+            }
+            val updatedSnippet = snippet.get()
+            updatedSnippet.status = status
+            this.snippetRepository.save(updatedSnippet)
         } else {
             throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
         }
