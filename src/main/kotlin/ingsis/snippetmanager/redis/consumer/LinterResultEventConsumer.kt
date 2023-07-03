@@ -1,13 +1,12 @@
 package ingsis.snippetmanager.redis.consumer
 
-import ingsis.snippetmanager.redis.events.LintResultEvent
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
-import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.stream.StreamReceiver
 import org.springframework.stereotype.Component
+import snippet.events.LintResultEvent
 import spring.mvc.redis.streams.RedisStreamConsumer
 import java.time.Duration
 

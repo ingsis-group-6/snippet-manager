@@ -3,7 +3,6 @@ package ingsis.snippetmanager.domains.snippet.controller
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
-import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.snippet.service.SnippetService
 import ingsis.snippetmanager.service.ShareSnippetService
 import org.springframework.beans.factory.annotation.Autowired

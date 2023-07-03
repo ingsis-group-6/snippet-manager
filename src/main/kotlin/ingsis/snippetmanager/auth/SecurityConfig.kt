@@ -1,6 +1,5 @@
 package ingsis.snippetmanager.auth
 
-import ingsis.snippetmanager.auth.AudienceValidator
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration

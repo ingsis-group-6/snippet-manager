@@ -1,7 +1,6 @@
 package ingsis.snippetmanager.domains.rule.dto
 
 import ingsis.snippetmanager.domains.rule.model.CaseConvention
-import ingsis.snippetmanager.domains.rule.model.FormatterRules
 import ingsis.snippetmanager.domains.rule.model.LinterRules
 
 class LinterRulesDTO {

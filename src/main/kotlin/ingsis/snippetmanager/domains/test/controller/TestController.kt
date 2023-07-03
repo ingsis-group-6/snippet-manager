@@ -3,7 +3,6 @@ package ingsis.snippetmanager.domains.test.controller
 
 import ingsis.snippetmanager.domains.test.dto.CreateTestDTO
 import ingsis.snippetmanager.domains.test.dto.TestDTO
-import ingsis.snippetmanager.domains.test.model.Test
 import ingsis.snippetmanager.domains.test.service.TestService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus

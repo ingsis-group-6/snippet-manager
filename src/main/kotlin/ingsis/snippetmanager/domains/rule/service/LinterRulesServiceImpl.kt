@@ -1,13 +1,9 @@
 package ingsis.snippetmanager.domains.rule.service
 
-import ingsis.snippetmanager.domains.rule.dto.FormatterRulesDTO
 import ingsis.snippetmanager.domains.rule.dto.LinterRulesDTO
 import ingsis.snippetmanager.domains.rule.model.CaseConvention
-import ingsis.snippetmanager.domains.rule.model.FormatterRules
 import ingsis.snippetmanager.domains.rule.model.LinterRules
-import ingsis.snippetmanager.domains.rule.repository.FormatterRulesRepository
 import ingsis.snippetmanager.domains.rule.repository.LinterRulesRepository
-import ingsis.snippetmanager.domains.rule.service.LinterRulesService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
