@@ -25,10 +25,12 @@ jobs:
           username: ingsis-group-6
           password: ${{ secrets.TOKEN }}
 
-      - name: Push to GitHub Packages
-        id: docker_build
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          push: true
           tags: |
             ghcr.io/ingsis-group-6/snippet-manager-dev:latest
+          build-args: |
+            "USERNAME=${{ secrets.PUBLISH_USERNAME }}"
+            "TOKEN=${{ secrets.PUBLISH_TOKEN }}"
+          push: true
