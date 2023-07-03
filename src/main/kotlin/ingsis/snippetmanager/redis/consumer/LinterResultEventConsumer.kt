@@ -21,6 +21,7 @@ class SampleConsumer @Autowired constructor(
         subscription()
     }
     override fun onMessage(record: ObjectRecord<String, LintResultEvent>) {
+        val a = 42
         println("Received event of snippet ${record.value.lintedSnippetId} with status ${record.value.status}")
     }
 
