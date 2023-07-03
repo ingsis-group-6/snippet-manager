@@ -2,10 +2,10 @@ package ingsis.snippetmanager.domains.test.model
 
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.test.dto.TestDTO
-import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "test")

@@ -1,18 +1,15 @@
 package ingsis.snippetmanager.domains.rule.model
 
 import ingsis.snippetmanager.domains.rule.dto.FormatterRulesDTO
-import jakarta.persistence.*
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.type.SqlTypes
 import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "formatter_rules")
 class FormatterRules {
 
     @Id
-    @JdbcTypeCode(SqlTypes.UUID)
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     var id: UUID? = null
 
