@@ -1,17 +1,14 @@
 package ingsis.snippetmanager.domains.rule.model
 
-import jakarta.persistence.*
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.type.SqlTypes
 import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "linter_rules")
 class LinterRules {
 
     @Id
-    @JdbcTypeCode(SqlTypes.UUID)
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     var id: UUID? = null
 

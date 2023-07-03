@@ -1,18 +1,15 @@
 package ingsis.snippetmanager.domains.snippet.model
 
 import ingsis.snippetmanager.domains.test.model.Test
-import jakarta.persistence.*
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.type.SqlTypes
 import java.util.*
+import javax.persistence.*
 
 @Entity
 @Table(name = "snippet")
 class Snippet {
 
     @Id
-    @JdbcTypeCode(SqlTypes.UUID)
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     var id: UUID? = null
 
