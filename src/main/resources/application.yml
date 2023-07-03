@@ -12,3 +12,11 @@ logging:
     org:
       springframework:
         security: DEBUG
+
+redis:
+  stream:
+    key: ingsis-group-6
+  host: localhost
+  port: 6379
+  groups:
+    lint: lint2
