@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.netflix.spectator:spectator-api:0.55.0'
     implementation 'org.springframework:spring-aspects'
 
-	implementation 'org.ingsis.group6:snippet-events:0.0.1-SNAPSHOT'
+	implementation 'org.ingsis.group6:snippet-events:0.0.2-SNAPSHOT'
 
 
 	implementation("spring-mvc-redis-streams:lib:0.0.1-SNAPSHOT")
