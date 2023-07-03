@@ -12,8 +12,9 @@ class ShareSnippetService {
     companion object{
 
             fun getSharedWithMeSnippetsIds( token: String): List<UUID> {
-                val env = Dotenv.load()
-                val url = env["SHARE_URI"] + "/shared_with_me/id"
+                //val env = Dotenv.load()
+                //val url = env["SHARE_URI"] + "/shared_with_me/id"
+                val url = System.getenv("SHARE_URI") + "/shared_with_me/id"
                 val template = RestTemplate()
                 val headers = HttpHeaders()
                 headers.set("Authorization", token)
@@ -23,8 +24,8 @@ class ShareSnippetService {
             }
 
             fun deleteSharesFromSnippet(token: String, snippetId: UUID) {
-                val env = Dotenv.load()
-                val url = env["SHARE_URI"] + "/by_snippet/"+ snippetId
+                //val env = Dotenv.load()
+                val url = System.getenv("SHARE_URI")+ "/by_snippet/"+ snippetId
                 val template = RestTemplate()
                 val headers = HttpHeaders()
                 headers.set("Authorization", token)
