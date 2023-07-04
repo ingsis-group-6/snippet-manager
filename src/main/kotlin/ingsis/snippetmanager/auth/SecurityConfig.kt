@@ -29,6 +29,7 @@ class SecurityConfig {
             .mvcMatchers("/snippet").authenticated()
             .mvcMatchers("/snippet/**").authenticated()
             .mvcMatchers("/health").authenticated()
+            .mvcMatchers("/health/**").authenticated()
             .mvcMatchers("/test").authenticated()
             .mvcMatchers("/test/**").authenticated()
             .mvcMatchers("/rule").authenticated()
