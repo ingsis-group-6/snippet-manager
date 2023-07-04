@@ -24,6 +24,11 @@ services:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
 
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
   app:
     build:
       context: .
@@ -38,6 +43,10 @@ services:
       DB_USER: postgres
       DB_PASSWORD: postgres
       SHARE_URI: "http://localhost:8080/share"
+      REDIS_STREAM_KEY: ingsis
+      REDIS_HOST: localhost
+      REDIS_PORT: 6379
+      REDIS_STREAM_GROUP_LINT: lint-manager
     labels:
       com.datadoghq.ad.logs: '[{"source": "java", "service": "manager-api-dev", "log_processing_rules": [{"type": "multi_line", "name": "log_start_with_date", "pattern" : "\\d{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])"}]}]'
 
