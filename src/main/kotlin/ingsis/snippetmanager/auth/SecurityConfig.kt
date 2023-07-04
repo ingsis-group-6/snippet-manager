@@ -28,7 +28,7 @@ class SecurityConfig {
         http.authorizeRequests()
             .mvcMatchers("/snippet").authenticated()
             .mvcMatchers("/snippet/**").authenticated()
-            .mvcMatchers("/health").permitAll()
+            .mvcMatchers("/health").authenticated()
             .mvcMatchers("/test").authenticated()
             .mvcMatchers("/test/**").authenticated()
             .mvcMatchers("/rule").authenticated()

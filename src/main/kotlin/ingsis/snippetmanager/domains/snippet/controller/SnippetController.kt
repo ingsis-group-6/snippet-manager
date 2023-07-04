@@ -33,7 +33,7 @@ class SnippetController {
     }
 
     @GetMapping("/health")
-    fun getHealth(): ResponseEntity<String>{
+    fun getHealth(principal: Principal): ResponseEntity<String>{
         return ResponseEntity("Service is up and running", HttpStatus.OK)
     }
     @PostMapping("/snippet")
