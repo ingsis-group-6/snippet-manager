@@ -31,6 +31,11 @@ class SnippetController {
     constructor(snippetService: SnippetService) {
         this.snippetService = snippetService
     }
+
+    @GetMapping("/health")
+    fun getHealth(): ResponseEntity<String>{
+        return ResponseEntity("Service is up and running", HttpStatus.OK)
+    }
     @PostMapping("/snippet")
     @ResponseBody
     fun createSnippet(principal: Principal, @RequestBody createSnippetDto: CreateSnippetDTO): ResponseEntity<Any> {
