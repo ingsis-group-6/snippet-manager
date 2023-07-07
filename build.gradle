@@ -19,8 +19,8 @@ repositories {
 		name = "GitHubPackages"
 		url = uri("https://maven.pkg.github.com/austral-ingsis/class-redis-streams")
 		credentials {
-			username = System.getenv("USERNAME")
-			password = System.getenv("TOKEN")
+			username = System.getenv("USERNAME") ?: project.findProperty("gpr.user")
+			password = System.getenv("TOKEN") ?: project.findProperty("gpr.key")
 		}
 	}
 	maven {
@@ -35,8 +35,8 @@ repositories {
 		name = "GitHubPackages"
 		url = uri("https://maven.pkg.github.com/ingsis-group-6/snippet-events")
 		credentials {
-			username = System.getenv("USERNAME")
-			password = System.getenv("TOKEN")
+			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
 		}
 	}
 }
@@ -54,15 +54,17 @@ dependencies {
     implementation 'org.springframework.metrics:spring-metrics:0.5.1.RELEASE'
     implementation 'com.netflix.spectator:spectator-api:0.55.0'
     implementation 'org.springframework:spring-aspects'
+	implementation 'io.projectreactor.kotlin:reactor-kotlin-extensions'
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
 
-	implementation 'org.ingsis.group6:snippet-events:0.0.2-SNAPSHOT'
+	implementation 'org.ingsis.group6:snippet-events:0.0.4-SNAPSHOT'
 
 
-	implementation("spring-mvc-redis-streams:lib:0.0.1-SNAPSHOT")
+//	implementation("spring-mvc-redis-streams:lib:0.0.1-SNAPSHOT")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
-//	implementation 'org.austral.ingsis:redis-streams:0.1.7'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+	implementation 'org.austral.ingsis:redis-streams:0.1.7'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
 }
 

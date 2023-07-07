@@ -19,12 +19,12 @@ class LinterRulesController {
     }
 
     @GetMapping("/rule/linter")
-    fun getFormatterRulesByUserId(principal: Principal): ResponseEntity<LinterRulesDTO> {
+    suspend fun getFormatterRulesByUserId(principal: Principal): ResponseEntity<LinterRulesDTO> {
         return ResponseEntity.ok(ruleService.getLinterRulesByUserId(principal.name))
     }
 
     @PutMapping("/rule/linter")
-    fun updateFormatterRules(@RequestBody linterRules: LinterRulesDTO, principal: Principal): ResponseEntity<LinterRulesDTO> {
+    suspend fun updateFormatterRules(@RequestBody linterRules: LinterRulesDTO, principal: Principal): ResponseEntity<LinterRulesDTO> {
         return ResponseEntity.ok(ruleService.updateLinterRules(linterRules, principal.name))
     }
 

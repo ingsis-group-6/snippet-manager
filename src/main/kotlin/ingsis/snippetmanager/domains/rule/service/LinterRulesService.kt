@@ -4,6 +4,6 @@ import ingsis.snippetmanager.domains.rule.dto.LinterRulesDTO
 
 interface LinterRulesService {
 
-    fun getLinterRulesByUserId(userId: String): LinterRulesDTO
-    fun updateLinterRules(linterRules: LinterRulesDTO, userId: String): LinterRulesDTO
+    suspend fun getLinterRulesByUserId(userId: String): LinterRulesDTO
+    suspend fun updateLinterRules(linterRules: LinterRulesDTO, userId: String): LinterRulesDTO
 }

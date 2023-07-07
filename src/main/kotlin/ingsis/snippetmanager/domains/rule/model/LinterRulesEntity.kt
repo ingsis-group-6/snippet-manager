@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "linter_rules")
-class LinterRules {
+class LinterRulesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

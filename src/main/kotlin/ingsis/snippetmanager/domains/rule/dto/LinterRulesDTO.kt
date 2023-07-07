@@ -1,7 +1,7 @@
 package ingsis.snippetmanager.domains.rule.dto
 
 import ingsis.snippetmanager.domains.rule.model.CaseConvention
-import ingsis.snippetmanager.domains.rule.model.LinterRules
+import ingsis.snippetmanager.domains.rule.model.LinterRulesEntity
 
 class LinterRulesDTO {
 
@@ -19,7 +19,7 @@ class LinterRulesDTO {
         this.userId = userId
     }
 
-    constructor(rule: LinterRules){
+    constructor(rule: LinterRulesEntity){
         this.caseConvention = rule.caseConvention
         this.printExpressionsEnabled = rule.printExpressionsEnabled
         this.userId = rule.userId

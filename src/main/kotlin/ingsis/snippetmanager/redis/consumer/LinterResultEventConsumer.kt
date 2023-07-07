@@ -1,19 +1,20 @@
 package ingsis.snippetmanager.redis.consumer
 
+import org.austral.ingsis.`class`.redis.RedisStreamConsumer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
+import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.stream.StreamReceiver
 import org.springframework.stereotype.Component
-import snippet.events.LintResultEvent
-import spring.mvc.redis.streams.RedisStreamConsumer
+import snippet.events.lint.LintResultEvent
 import java.time.Duration
 
 @Component
 class SampleConsumer @Autowired constructor(
-    redis: RedisTemplate<String, String>,
-    @Value("\${redis.stream.key}") streamKey: String,
+    redis: ReactiveRedisTemplate<String, String>,
+    @Value("\${redis.stream.result_key}") streamKey: String,
     @Value("\${redis.groups.lint}") groupId: String
 ) : RedisStreamConsumer<LintResultEvent>(streamKey, groupId, redis) {
 
@@ -21,8 +22,7 @@ class SampleConsumer @Autowired constructor(
         subscription()
     }
     override fun onMessage(record: ObjectRecord<String, LintResultEvent>) {
-        val a = 42
-        println("Received event of snippet ${record.value.lintedSnippetId} with status ${record.value.status}")
+        println("Received event of snippet ${record.value.snippetId} with status ${record.value.status}")
     }
 
     override fun options(): StreamReceiver.StreamReceiverOptions<String, ObjectRecord<String, LintResultEvent>> {

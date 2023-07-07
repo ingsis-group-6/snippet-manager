@@ -1,20 +1,20 @@
-#auth0:
-#  audience: https://ingsis-group-6-snippets.com
-#spring:
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: https://dev-rjrd5i1gdszeds2w.us.auth0.com/
-
 auth0:
-  audience: ${AUTH_AUDIENCE}
+  audience: https://ingsis-group-6-snippets.com
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${AUTH_ISSUER}
+          issuer-uri: https://dev-rjrd5i1gdszeds2w.us.auth0.com/
+
+#auth0:
+#  audience: ${AUTH_AUDIENCE}
+#spring:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${AUTH_ISSUER}
 
 logging:
   level:
@@ -22,10 +22,19 @@ logging:
       springframework:
         security: DEBUG
 
+#redis:
+#  stream:
+#    key: ${REDIS_STREAM_KEY}
+#  host: ${REDIS_HOST}
+#  port: ${REDIS_PORT}
+#  groups:
+#    lint: ${REDIS_STREAM_GROUP_LINT}
+
 redis:
   stream:
-    key: ${REDIS_STREAM_KEY}
-  host: ${REDIS_HOST}
-  port: ${REDIS_PORT}
+    result_key: result
+    request_key: request
+  host: localhost
+  port: 6379
   groups:
-    lint: ${REDIS_STREAM_GROUP_LINT}
+    lint: manager-lint
