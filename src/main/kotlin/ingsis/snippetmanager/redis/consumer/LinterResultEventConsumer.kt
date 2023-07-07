@@ -1,5 +1,7 @@
 package ingsis.snippetmanager.redis.consumer
 
+import ingsis.snippetmanager.domains.rule.adapter.LintResultStatusToComplianceStateAdapter
+import ingsis.snippetmanager.domains.snippet.service.SnippetService
 import org.austral.ingsis.`class`.redis.RedisStreamConsumer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -10,12 +12,15 @@ import org.springframework.data.redis.stream.StreamReceiver
 import org.springframework.stereotype.Component
 import snippet.events.lint.LintResultEvent
 import java.time.Duration
+import java.util.*
 
 @Component
 class SampleConsumer @Autowired constructor(
     redis: ReactiveRedisTemplate<String, String>,
     @Value("\${redis.stream.result_key}") streamKey: String,
-    @Value("\${redis.groups.lint}") groupId: String
+    @Value("\${redis.groups.lint}") groupId: String,
+    @Autowired private val snippetService: SnippetService,
+    @Autowired private val complianceAdapter: LintResultStatusToComplianceStateAdapter
 ) : RedisStreamConsumer<LintResultEvent>(streamKey, groupId, redis) {
 
     init {
@@ -23,6 +28,7 @@ class SampleConsumer @Autowired constructor(
     }
     override fun onMessage(record: ObjectRecord<String, LintResultEvent>) {
         println("Received event of snippet ${record.value.snippetId} with status ${record.value.status}")
+        snippetService.setSnippetCompliance(record.value.snippetId, complianceAdapter.toComplianceState(record.value.status))
     }
 
     override fun options(): StreamReceiver.StreamReceiverOptions<String, ObjectRecord<String, LintResultEvent>> {

@@ -58,7 +58,7 @@ class LinterRulesServiceImpl: LinterRulesService {
         val userSnippets = this.snippetService.getSnippetsByUserId(userId)
         for (snippet in userSnippets) {
             val rules = LinterRules(enumValueOf<snippet.events.lint.rules.CaseConvention>(linterRulesDto.caseConvention.toString()), linterRulesDto.printExpressionsEnabled!!)
-            val event = LintRequestEvent(snippet.id.toString(), snippet.content!!, rules)
+            val event = LintRequestEvent(snippet.id!!, snippet.content!!, rules)
             this.producer.publishEvent(event)
 
         }

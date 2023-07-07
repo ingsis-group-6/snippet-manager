@@ -1,5 +1,6 @@
 package ingsis.snippetmanager.domains.snippet.model
 
+import ingsis.snippetmanager.domains.rule.model.ComplianceState
 import ingsis.snippetmanager.domains.test.model.Test
 import java.util.*
 import javax.persistence.*
@@ -24,6 +25,9 @@ class Snippet {
 
     @Column(name = "content", nullable = false)
     var content: String? = null //Ahora es content, después pasa a ser un id para el bucket
+
+    @Column(name = "compliance", nullable = false)
+    var compliance: ComplianceState? = ComplianceState.PENDING //Ahora es content, después pasa a ser un id para el bucket
 
     @Column(name = "createdAt", nullable = false)
     var createdAt: Date? = null

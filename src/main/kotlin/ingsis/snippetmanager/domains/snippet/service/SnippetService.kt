@@ -1,5 +1,6 @@
 package ingsis.snippetmanager.domains.snippet.service
 
+import ingsis.snippetmanager.domains.rule.model.ComplianceState
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
@@ -15,4 +16,5 @@ interface SnippetService {
     fun getAllSnippetsByUserId(userId: String): List<SnippetDTO>
     fun getSnippetsByUserIdAndSnippetId(userId: String, snippets: List<UUID>): List<SnippetDTO>
     fun validateOwnership(userId: String, snippetId: UUID)
+    fun setSnippetCompliance(snippetId: UUID, compliance: ComplianceState)
 }

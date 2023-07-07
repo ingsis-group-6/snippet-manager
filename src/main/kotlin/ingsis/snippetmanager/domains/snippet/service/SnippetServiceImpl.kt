@@ -1,5 +1,6 @@
 package ingsis.snippetmanager.domains.snippet.service
 
+import ingsis.snippetmanager.domains.rule.model.ComplianceState
 import ingsis.snippetmanager.domains.snippet.dto.CreateSnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.SnippetDTO
 import ingsis.snippetmanager.domains.snippet.dto.UpdateSnippetDTO
@@ -85,6 +86,17 @@ class SnippetServiceImpl: SnippetService {
             if (snippet.get().ownerId != userId) {
                 throw HTTPError("You don't have permission to access this snippet", HttpStatus.UNAUTHORIZED)
             }
+        } else {
+            throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
+        }
+    }
+
+    override fun setSnippetCompliance(snippetId: UUID, compliance: ComplianceState) {
+        print("setSnippetCompliance with state $compliance")
+        val snippet = this.snippetRepository.findById(snippetId)
+        if (snippet.isPresent) {
+            snippet.get().compliance = compliance
+            this.snippetRepository.save(snippet.get())
         } else {
             throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
         }

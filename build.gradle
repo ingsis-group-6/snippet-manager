@@ -57,7 +57,7 @@ dependencies {
 	implementation 'io.projectreactor.kotlin:reactor-kotlin-extensions'
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
 
-	implementation 'org.ingsis.group6:snippet-events:0.0.4-SNAPSHOT'
+	implementation 'org.ingsis.group6:snippet-events:0.0.5'
 
 
 //	implementation("spring-mvc-redis-streams:lib:0.0.1-SNAPSHOT")
