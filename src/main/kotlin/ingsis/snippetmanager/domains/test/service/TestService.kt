@@ -9,4 +9,5 @@ interface TestService {
     fun updateTest(test: TestDTO, userId: String): TestDTO
     fun deleteTest(id: UUID, userId: String)
     fun getTestsByUser(id: String): List<TestDTO>
+    fun getTestById(id: UUID, userId: String?): TestDTO
 }

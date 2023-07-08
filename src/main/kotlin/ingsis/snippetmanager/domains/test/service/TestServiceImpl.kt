@@ -36,7 +36,7 @@ class TestServiceImpl : TestService{
             ownerId = userId,
             input = testDTO.input.toString(),
             output = testDTO.output.toString(),
-            snippetId = testDTO.snippetId
+            snippet = snippet.get()
         )
 
         return TestDTO(testRepository.save(test))
@@ -55,5 +55,11 @@ class TestServiceImpl : TestService{
 
     override fun getTestsByUser(id: String): List<TestDTO> {
         return testRepository.findByOwnerId(id).map { TestDTO(it) }
+    }
+
+    override fun getTestById(id: UUID, userId: String?): TestDTO {
+        val test = testRepository.findById(id)
+        if (test.get().ownerId == userId) return TestDTO(test.get())
+        throw HTTPError("User must own test to edit it", HttpStatus.FORBIDDEN)
     }
 }

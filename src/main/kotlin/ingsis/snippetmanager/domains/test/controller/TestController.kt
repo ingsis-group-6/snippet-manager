@@ -61,4 +61,11 @@ class TestController {
         return ResponseEntity(testService.getTestsByUser("auth0|"+id), HttpStatus.OK)
     }
 
+    // get test by id
+    @GetMapping("/test/{id}")
+    @ResponseBody
+    fun getTestById(principal: Principal, @PathVariable id: UUID): ResponseEntity<TestDTO> {
+        return ResponseEntity(testService.getTestById(id, principal.name), HttpStatus.OK)
+    }
+
 }

@@ -44,20 +44,6 @@ class Test {
         // Default constructor required by JPA
     }
 
-    constructor(
-        description: String?,
-        ownerId: String?,
-        input: String?,
-        output: String?,
-        snippetId: UUID?
-    ) {
-        this.description = description
-        this.createdAt = Date()
-        this.ownerId = ownerId
-        this.input = input
-        this.output = output
-        this.snippet = Snippet().apply { id = snippetId }
-    }
 
     constructor(
         description: String?,
