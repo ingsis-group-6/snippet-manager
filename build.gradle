@@ -28,7 +28,7 @@ repositories {
 		url = uri("https://maven.pkg.github.com/Snippet-Searcher/spring-mvc-redis-streams%22")
 		credentials {
 			username = System.getenv("USERNAME")
-			password =  System.getenv("TOKEN")
+			password = System.getenv("TOKEN")
 		}
 	}
 	maven {
@@ -60,11 +60,11 @@ dependencies {
 	implementation 'org.ingsis.group6:snippet-events:0.0.5'
 
 
-//	implementation("spring-mvc-redis-streams:lib:0.0.1-SNAPSHOT")
+	implementation("spring-mvc-redis-streams:lib:0.0.1-SNAPSHOT")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
-	implementation 'org.austral.ingsis:redis-streams:0.1.7'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+//	implementation 'org.austral.ingsis:redis-streams:0.1.7'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
 }
 

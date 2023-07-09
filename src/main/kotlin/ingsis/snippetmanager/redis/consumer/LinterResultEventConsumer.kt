@@ -2,7 +2,6 @@ package ingsis.snippetmanager.redis.consumer
 
 import ingsis.snippetmanager.domains.rule.adapter.LintResultStatusToComplianceStateAdapter
 import ingsis.snippetmanager.domains.snippet.service.SnippetService
-import org.austral.ingsis.`class`.redis.RedisStreamConsumer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.connection.stream.ObjectRecord
@@ -11,12 +10,13 @@ import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.stream.StreamReceiver
 import org.springframework.stereotype.Component
 import snippet.events.lint.LintResultEvent
+import spring.mvc.redis.streams.RedisStreamConsumer
 import java.time.Duration
 import java.util.*
 
 @Component
 class SampleConsumer @Autowired constructor(
-    redis: ReactiveRedisTemplate<String, String>,
+    redis: RedisTemplate<String, String>,
     @Value("\${redis.stream.result_key}") streamKey: String,
     @Value("\${redis.groups.lint}") groupId: String,
     @Autowired private val snippetService: SnippetService,

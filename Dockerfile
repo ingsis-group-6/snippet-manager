@@ -10,5 +10,5 @@ ENV TOKEN ${TOKEN}
 
 
 RUN gradle build
-EXPOSE 8080
+EXPOSE 8081
 ENTRYPOINT ["java","-jar","/home/gradle/src/build/libs/snippet-manager-0.0.1-SNAPSHOT.jar"]
