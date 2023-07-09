@@ -22,20 +22,20 @@ logging:
       springframework:
         security: DEBUG
 
-redis:
-  stream:
-    result_key: ${REDIS_STREAM_RESULT_KEY}
-    request_key: ${REDIS_STREAM_REQUEST_KEY}
-  host: ${REDIS_HOST}
-  port: ${REDIS_PORT}
-  groups:
-    lint: ${REDIS_STREAM_GROUP_LINT}
-
 #redis:
 #  stream:
-#    result_key: result
-#    request_key: request
-#  host: localhost
-#  port: 6379
+#    result_key: ${REDIS_STREAM_RESULT_KEY}
+#    request_key: ${REDIS_STREAM_REQUEST_KEY}
+#  host: ${REDIS_HOST}
+#  port: ${REDIS_PORT}
 #  groups:
-#    lint: manager-lint
+#    lint: ${REDIS_STREAM_GROUP_LINT}
+
+redis:
+  stream:
+    result_key: result
+    request_key: request
+  host: localhost
+  port: 6379
+  groups:
+    lint: manager-lint

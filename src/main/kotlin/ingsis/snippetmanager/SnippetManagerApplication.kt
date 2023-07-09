@@ -6,7 +6,7 @@ import org.springframework.metrics.export.datadog.EnableDatadogMetrics
 
 
 @SpringBootApplication
-@EnableDatadogMetrics
+//@EnableDatadogMetrics
 class SnippetManagerApplication
 
 fun main(args: Array<String>) {
