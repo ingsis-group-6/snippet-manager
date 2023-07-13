@@ -50,6 +50,12 @@ class SnippetController {
         return ResponseEntity(snippetService.updateSnippet(snippet, userId), HttpStatus.OK)
     }
 
+    @GetMapping("/snippet/me")
+    @ResponseBody
+    fun mySnippets(@RequestHeader("Authorization") token: String, principal: Principal): ResponseEntity<Any> {
+        return ResponseEntity(snippetService.getSnippetsByUserId(principal.name), HttpStatus.OK)
+    }
+
     @DeleteMapping("/snippet/{id}")
     @ResponseBody
     fun deleteSnippet(@RequestHeader("Authorization") token: String, principal: Principal, @PathVariable id: UUID): ResponseEntity<String> {

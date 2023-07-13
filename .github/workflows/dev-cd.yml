@@ -4,6 +4,7 @@ on:
     branches:
       - develop
       - dev
+      - refactor_put
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
