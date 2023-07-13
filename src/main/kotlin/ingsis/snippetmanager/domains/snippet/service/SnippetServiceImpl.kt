@@ -39,11 +39,9 @@ class SnippetServiceImpl: SnippetService {
 
     override fun updateSnippet(snippet: UpdateSnippetDTO, userId: String): SnippetDTO {
         val snippetToSave = this.snippetRepository.findById(snippet.id!!).get()
-        snippetToSave.name = snippet.name
-        snippetToSave.type = snippet.type
         snippetToSave.content = snippet.content
         snippetToSave.updatedAt = Date()
-        if (snippet.ownerId == userId) return SnippetDTO(this.snippetRepository.save(snippetToSave))
+        if (snippetToSave.ownerId == userId) return SnippetDTO(this.snippetRepository.save(snippetToSave))
         throw HTTPError("User must own the snippet to edit it", HttpStatus.FORBIDDEN)
     }
 
