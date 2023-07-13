@@ -11,6 +11,7 @@ class UpdateSnippetDTO {
             id: UUID?,
             content: String?,
         ) {
+            this.id = id
             this.content = content
         }
 
