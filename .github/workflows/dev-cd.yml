@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - develop
+      - dev
+      - refactor_put
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
@@ -13,6 +15,10 @@ jobs:
         id: short-sha
         with:
           length: 8
+      - name: aber
+        run: echo ${{ secrets.TOKEN}}
+      - name: aber2
+        run: echo ${{ secrets.TOKEN}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -24,10 +30,12 @@ jobs:
           username: ingsis-group-6
           password: ${{ secrets.TOKEN }}
 
-      - name: Push to GitHub Packages
-        id: docker_build
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          push: true
           tags: |
             ghcr.io/ingsis-group-6/snippet-manager-dev:latest
+          build-args: |
+            "USERNAME=${{ secrets.PUBLISH_USERNAME }}"
+            "TOKEN=${{ secrets.PUBLISH_TOKEN }}"
+          push: true
