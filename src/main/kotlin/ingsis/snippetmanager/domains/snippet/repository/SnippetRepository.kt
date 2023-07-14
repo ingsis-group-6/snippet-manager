@@ -15,4 +15,7 @@ interface SnippetRepository : JpaRepository<Snippet, UUID> {
 
     @Query("SELECT s FROM Snippet s WHERE s.ownerId = :userId OR s.id IN :snippets")
     fun findAllByUserIdAndSnippetId(userId: String, snippets: List<UUID>): List<Snippet>
+
+    @Query("SELECT s FROM Snippet s WHERE s.id IN :snippets")
+    fun findAllInIdList(snippets: List<UUID>): List<Snippet>
 }
