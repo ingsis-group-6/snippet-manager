@@ -6,6 +6,7 @@ import ingsis.snippetmanager.domains.test.dto.TestDTO
 import ingsis.snippetmanager.domains.test.model.Test
 import ingsis.snippetmanager.domains.test.repository.TestRepository
 import ingsis.snippetmanager.error.HTTPError
+import ingsis.snippetmanager.service.ShareSnippetService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -25,11 +26,11 @@ class TestServiceImpl : TestService{
         this.snippetRepository = snippetRepository
     }
 
-    override fun createTest(testDTO: CreateTestDTO, userId: String): TestDTO {
+    override fun createTest(token: String, testDTO: CreateTestDTO, userId: String): TestDTO {
 
         val snippet = this.snippetRepository.findById(testDTO.snippetId!!)
-
-        if (snippet.get().ownerId != userId) throw HTTPError("User must own snippet to create a test", HttpStatus.FORBIDDEN)
+        val sharedIds = ShareSnippetService.getSharedWithMeSnippetsIds(token)
+        if (snippet.get().ownerId != userId && !sharedIds.contains(testDTO.snippetId)) throw HTTPError("User must have access to snippet to create a test", HttpStatus.FORBIDDEN)
 
         val test = Test(
             description = testDTO.description,
