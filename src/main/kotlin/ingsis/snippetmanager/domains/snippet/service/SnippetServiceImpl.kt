@@ -99,4 +99,8 @@ class SnippetServiceImpl: SnippetService {
             throw HTTPError("Snippet not found", HttpStatus.NOT_FOUND)
         }
     }
+
+    override fun getSnippetsFromIdList(ids: List<UUID>): List<SnippetDTO> {
+        return this.snippetRepository.findAllInIdList(ids).map { SnippetDTO(it) }
+    }
 }

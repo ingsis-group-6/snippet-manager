@@ -1,5 +1,6 @@
 package ingsis.snippetmanager.domains.snippet.dto
 
+import ingsis.snippetmanager.domains.rule.model.ComplianceState
 import ingsis.snippetmanager.domains.snippet.model.Snippet
 import ingsis.snippetmanager.domains.test.dto.CreateTestDTO
 import ingsis.snippetmanager.domains.test.model.Test
@@ -11,6 +12,7 @@ class SnippetDTO {
     var name: String? = null
     var type: String? = null
     var content: String? = null
+    var compliance: ComplianceState? = null
     var tests: List<CreateTestDTO>? = null
     var ownerId: String? = null
     var createdAt: Date? = null
@@ -29,6 +31,7 @@ class SnippetDTO {
         this.tests = tests!!.map { CreateTestDTO(it.description, parseStringToList(it.input!!), parseStringToList(it.output!!), it.snippet!!.id) }
         this.ownerId = ownerId
         this.createdAt = createdAt
+        this.compliance = ComplianceState.PENDING
     }
 
     constructor(snippet: Snippet){
@@ -39,6 +42,7 @@ class SnippetDTO {
         this.ownerId = snippet.ownerId
         this.createdAt = snippet.createdAt
         this.id = snippet.id
+        this.compliance = snippet.compliance
     }
 
     private fun parseStringToList(string: String): List<String?> {
