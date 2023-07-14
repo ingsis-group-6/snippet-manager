@@ -17,4 +17,5 @@ interface SnippetService {
     fun getSnippetsByUserIdAndSnippetId(userId: String, snippets: List<UUID>): List<SnippetDTO>
     fun validateOwnership(userId: String, snippetId: UUID)
     fun setSnippetCompliance(snippetId: UUID, compliance: ComplianceState)
+    fun getSnippetsFromIdList(ids: List<UUID>): List<SnippetDTO>
 }
